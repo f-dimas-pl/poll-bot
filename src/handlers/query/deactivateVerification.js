@@ -14,3 +14,7 @@ export const deactivateVerificationYes = async (ctx) => {
         {parse_mode: "HTML"}
     )
 }
+
+export const deactivateVerificationNo = async (ctx) => {
+    await ctx.deleteMessage();
+}
