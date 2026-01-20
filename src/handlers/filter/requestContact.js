@@ -10,7 +10,11 @@ const requestContact = async (ctx) => {
     }
 
     if (ctx.session.isRequireContact) {
-        const phoneNumber = ctx.message.contact.phone_number;
+        let phoneNumber = ctx.message.contact.phone_number
+
+        if (phoneNumber.includes("+")) {
+            phoneNumber = ctx.message.contact.phone_number.replace("+", "")
+        }
 
         const { data: userData, error: userDataError } = await database
             .from('users')

@@ -41,7 +41,7 @@ bot.command('create_poll', async (ctx) => {
 })
 
 bot.command('poll', async (ctx) => {
-    const {data, error} = await database
+    const {data} = await database
         .from('polls')
         .select()
         .single()
