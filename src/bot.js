@@ -5,6 +5,7 @@ const bot = new Bot(API_CONFIG.botToken);
 import startCommand from "./handlers/command/start.js";
 import requestContact from "./handlers/filter/requestContact.js";
 import deactivateCommand from "./handlers/command/deactivate.js";
+import {deactivateVerificationYes} from "./handlers/query/deactivateVerification.js";
 
 bot.use(session({
     initial: () => ({isRequireContact: false})
@@ -19,9 +20,7 @@ bot.callbackQuery("deactivate_verification_no", async (ctx) => {
     await ctx.deleteMessage();
 })
 
-bot.callbackQuery("deactivate_verification_yes", async (ctx) => {
-    // await ctx.reply()
-})
+bot.callbackQuery("deactivate_verification_yes", deactivateVerificationYes)
 
 bot.command('create_poll', async (ctx) => {
     await ctx.reply('/')
