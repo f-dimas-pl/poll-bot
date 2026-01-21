@@ -1,21 +1,21 @@
 import {InlineKeyboard} from "grammy";
+import {supabase as database} from "../../database.js";
 
 const pollCommand = async (ctx) => {
-    const {data} = await database
+    const {data: polls} = await database
         .from('polls')
-        .select()
-        .single()
+        .select('*')
 
-    if (data && data.variants) {
+    if (polls) {
         const keyboard = new InlineKeyboard()
 
-        data.variants.forEach(item => {
-            keyboard.text(item.toString(), `variant_${item}`).row()
+        polls.forEach(poll => {
+            keyboard
+                .text(poll.theme, `poll_${poll.id}`)
+                .row()
         })
 
-        await ctx.reply(data.theme, {
-            reply_markup: keyboard
-        })
+        await ctx.reply("Опросы", {reply_markup: keyboard})
     }
 }
 
